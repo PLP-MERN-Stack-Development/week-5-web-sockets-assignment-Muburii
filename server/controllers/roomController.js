@@ -1,4 +1,4 @@
-const Room = require("../models/Rooms");
+const Room = require("../models/Room");
 
 exports.getRooms = async (req, res) => {
   try {

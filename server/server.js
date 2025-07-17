@@ -27,9 +27,9 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
-app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/rooms", require("./routes/roomRoutes"));
-app.use("/api/messages", require("./routes/messageRoutes"));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/rooms", require("./routes/room"));
+app.use("/api/messages", require("./routes/message"));
 
 // Root route
 app.get('/', (req, res) => {
