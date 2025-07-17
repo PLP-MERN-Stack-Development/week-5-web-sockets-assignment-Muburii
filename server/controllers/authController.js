@@ -26,7 +26,7 @@ exports.signup = async (req, res, next) => {
 // Login
 exports.login = async (req, res, next) => {
   try {
-    const { username, password } = req.body; // 👈 use username
+    const { username, password } = req.body; 
 
     const user = await User.findOne({ username }); // 👈 find by username
     if (!user) return res.status(404).json({ message: "Invalid credentials" });

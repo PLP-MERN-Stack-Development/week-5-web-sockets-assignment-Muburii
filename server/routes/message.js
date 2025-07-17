@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { getRoomMessages } = require("../controllers/messageController");
-const { protect } = require("../middleware/auth");
 
-router.get('/:roomId', protect, getRoomMessages);
+// Remove protect() for now if token not sent from frontend
+router.get("/:roomId", getRoomMessages);
 
 module.exports = router;

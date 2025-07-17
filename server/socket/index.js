@@ -24,13 +24,24 @@ module.exports = (io) => {
       });
 
       socket.on("sendMessage", async (data) => {
-        const message = await Message.create({
-          sender: user._id,
-          room: roomId,
-          content: data,
-        });
-        const fullMessage = await message.populate("sender", "username");
-        io.to(roomId).emit("newMessage", fullMessage);
+        try {
+          // Ensure 'data.content' exists and is a string
+          if (typeof data.content !== 'string') {
+            console.error("Invalid message content:", data);
+            return;
+          }
+
+          const message = await Message.create({
+            sender: user._id,
+            room: roomId,
+            content: data.content, // ✅ Only use the string
+          });
+
+          const fullMessage = await message.populate("sender", "username");
+          io.to(roomId).emit("newMessage", fullMessage);
+        } catch (error) {
+          console.error("Error sending message:", error.message);
+        }
       });
 
       socket.on("disconnect", async () => {

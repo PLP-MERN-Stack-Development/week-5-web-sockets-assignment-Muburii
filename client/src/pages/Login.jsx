@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
-import { login } from "@/services/api";
+import { login } from "../services/api";
 
 export default function Login({ setUser }) {
   const [username, setUsername] = useState("");
@@ -21,16 +21,17 @@ export default function Login({ setUser }) {
 
     setLoading(true);
     try {
-      const res = await login({ username, password }); // ✅ pass username & password
+    const res = await login({ username, password }); // res = { token, user }
 
-      if (!res.data?.token) {
-        alert("Login failed: No token received");
-        return;
-      }
+    if (!res.token) {
+    alert("Login failed: No token received");
+    return;
+    }
 
-      localStorage.setItem("token", res.data.token);
-      setUser(res.data.user); 
-      navigate("/home");
+    localStorage.setItem("token", res.token);
+    setUser(res.user);
+    navigate("/home");
+
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     } finally {
